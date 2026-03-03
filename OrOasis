@@ -1,0 +1,81 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        a = [int(x) for x in input_data[ptr : ptr + n]]
+        ptr += n
+        
+        
+        total_or = 0
+        for x in a:
+            total_or |= x
+            
+      
+        pref = [0] * (n + 1)
+        suff = [0] * (n + 1)
+        for i in range(n):
+            pref[i+1] = pref[i] | a[i]
+        for i in range(n-1, -1, -1):
+            suff[i] = suff[i+1] | a[i]
+            
+        min_len = float('inf')
+        count = 0
+        
+        bit_counts = [0] * 32
+        current_window_or = 0
+        left = 0
+        
+       
+        for right in range(n):
+           
+            val = a[right]
+            for b in range(31):
+                if (val >> b) & 1:
+                    if bit_counts[b] == 0:
+                        current_window_or |= (1 << b)
+                    bit_counts[b] += 1
+            
+            
+            while left <= right and current_window_or == total_or:
+               
+                outside_or = pref[left] | suff[right + 1]
+                
+                if outside_or == total_or:
+                    length = right - left + 1
+                    if length < min_len:
+                        min_len = length
+                        count = 1
+                    elif length == min_len:
+                        count += 1
+                
+                
+                val_l = a[left]
+                for b in range(31):
+                    if (val_l >> b) & 1:
+                        bit_counts[b] -= 1
+                        if bit_counts[b] == 0:
+                            current_window_or &= ~(1 << b)
+                left += 1
+        
+        if min_len == float('inf'):
+            results.append("-1")
+        else:
+            results.append(f"{min_len} {count}")
+
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
