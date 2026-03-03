@@ -1,0 +1,41 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    output = []
+    
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        
+        monsters = input_data[ptr : ptr + n]
+        ptr += n
+        
+        stack = []
+        current_results = []
+        
+        for m_str in monsters:
+            strength = int(m_str)
+            
+            
+            while stack and stack[-1] <= strength:
+                stack.pop()
+           
+            stack.append(strength)
+            
+            current_results.append(str(len(stack)))
+            
+        output.append(" ".join(current_results))
+   
+    sys.stdout.write("\n".join(output) + "\n")
+
+if __name__ == "__main__":
+    solve()
