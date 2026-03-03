@@ -1,0 +1,45 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        
+        a = input_data[ptr : ptr + n]
+        ptr += n
+        b = input_data[ptr : ptr + n]
+        ptr += n
+        
+        left = -1
+        for i in range(n):
+            if a[i] != b[i]:
+                left = i
+                break
+        
+        if left == -1:
+            results.append("0")
+            continue
+          
+        right = -1
+        for i in range(n - 1, -1, -1):
+            if a[i] != b[i]:
+                right = i
+                break
+        
+        length = right - left + 1
+        results.append(str(length))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
