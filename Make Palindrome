@@ -1,0 +1,38 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    ptr = 1
+    results = []
+    
+    for _ in range(t):
+        n = int(input_data[ptr])
+        s = input_data[ptr + 1]
+        ptr += 2
+        
+       
+        char_counts = {}
+        for char in s:
+            char_counts[char] = char_counts.get(char, 0) + 1
+            
+        
+        odd_freq_count = 0
+        for count in char_counts.values():
+            if count % 2 != 0:
+                odd_freq_count += 1
+        
+        
+        if odd_freq_count <= 1:
+            results.append("0")
+        else:
+            results.append(str(odd_freq_count - 1))
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
