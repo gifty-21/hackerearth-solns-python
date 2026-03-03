@@ -1,0 +1,48 @@
+import sys
+
+def solve():
+   
+    input = sys.stdin.read().split()
+    if not input:
+        return
+    
+    idx = 0
+    t = int(input[idx])
+    idx += 1
+    MOD = 10**9 + 7
+    
+    results = []
+    
+    for _ in range(t):
+        n = int(input[idx])
+        idx += 1
+        arr = input[idx : idx + n]
+        idx += n
+        
+        e_sum = 1
+        o_sum = 0
+        current_xor = 0
+        ans = 0
+        
+        for x_str in arr:
+            x = int(x_str)
+            current_xor ^= x
+            
+            
+            if bin(current_xor).count('1') % 2 == 1:
+                
+                ans = e_sum
+                o_sum = (o_sum + ans) % MOD
+            else:
+               
+                ans = o_sum
+                e_sum = (e_sum + ans) % MOD
+        
+        results.append(str(ans))
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
+
+
