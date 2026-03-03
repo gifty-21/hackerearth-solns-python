@@ -1,0 +1,73 @@
+import sys
+
+
+input = sys.stdin.read
+
+def solve():
+    
+    MAX_VAL = 100001
+    mu = [0] * MAX_VAL
+    mu[1] = 1
+    primes = []
+    is_prime = [True] * MAX_VAL
+    
+    for i in range(2, MAX_VAL):
+        if is_prime[i]:
+            primes.append(i)
+            mu[i] = -1
+        for p in primes:
+            if i * p >= MAX_VAL: break
+            is_prime[i * p] = False
+            if i % p == 0:
+                mu[i * p] = 0
+                break
+            else:
+                mu[i * p] = -mu[i]
+                
+    
+    divs = [[] for _ in range(MAX_VAL)]
+    for i in range(1, MAX_VAL):
+        for j in range(i, MAX_VAL, i):
+            divs[j].append(i)
+
+    
+    data = input().split()
+    if not data: return
+    
+    ptr = 0
+    t = int(data[ptr]); ptr += 1
+    MOD = 10**9 + 7
+    
+    results = []
+    for _ in range(t):
+        n = int(data[ptr]); ptr += 1
+        arr = list(map(int, data[ptr : ptr + n]))
+        ptr += n
+        
+        
+        S = [0] * MAX_VAL
+        total_count = 0
+        
+        for x in arr:
+            
+            ways_to_extend = 0
+            for d in divs[x]:
+                if mu[d] == 1:
+                    ways_to_extend = (ways_to_extend + S[d]) % MOD
+                elif mu[d] == -1:
+                    ways_to_extend = (ways_to_extend - S[d]) % MOD
+            
+            
+            current_dp = (1 + ways_to_extend) % MOD
+            total_count = (total_count + current_dp) % MOD
+            
+            
+            for d in divs[x]:
+                S[d] = (S[d] + current_dp) % MOD
+                
+        results.append(str(total_count))
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
