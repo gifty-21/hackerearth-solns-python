@@ -1,0 +1,60 @@
+import sys
+
+def solve():
+    s_n = sys.stdin.read().strip()
+    if not s_n:
+        return
+    
+    n = int(s_n)
+    candidates = set()
+    
+    if len(s_n) > 1:
+        candidates.add(int('9' * (len(s_n) - 1)))
+    
+    candidates.add(int('1' * (len(s_n) + 1)))
+    
+    prefix = ""
+    for i, digit in enumerate(s_n):
+        d = int(digit)
+        if d % 2 != 0:
+            prefix += digit
+        else:
+           
+            if d > 0:
+                low = prefix + str(d - 1) + '9' * (len(s_n) - i - 1)
+                candidates.add(int(low))
+            else:
+                
+                pass
+          
+            if d < 9:
+                high = prefix + str(d + 1) + '1' * (len(s_n) - i - 1)
+                candidates.add(int(high))
+            
+          
+            for j in range(len(prefix) - 1, -1, -1):
+                p_digit = int(prefix[j])
+                if p_digit > 1:
+                    new_prefix = prefix[:j] + str(p_digit - 2) + '9' * (len(s_n) - j - 1)
+                    candidates.add(int(new_prefix))
+                    break
+            
+            break
+    else:
+        
+        candidates.add(n)
+
+  
+    best_cand = -1
+    min_diff = float('inf')
+  
+    for cand in sorted(list(candidates)):
+        diff = abs(cand - n)
+        if diff < min_diff:
+            min_diff = diff
+            best_cand = cand
+            
+    print(best_cand)
+
+if __name__ == "__main__":
+    solve()
