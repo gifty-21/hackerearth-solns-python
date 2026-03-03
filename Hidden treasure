@@ -1,0 +1,25 @@
+def solve (n, nums):
+    digit_sum_counts = {}
+    
+    for num in nums:
+        s = 0
+        for digit in str(abs(num)):
+            s += int(digit)
+
+        if s in digit_sum_counts:
+            digit_sum_counts[s] += 1
+        else:
+            digit_sum_counts[s] = 1
+        
+    total_pairs = 0
+    for count in digit_sum_counts.values():
+        if count > 1:
+            total_pairs += (count * (count - 1)) // 2
+            
+    return total_pairs
+    pass
+n = int(input())
+nums = list(map(int, input().split()))
+
+out_ = solve(n, nums)
+print (out_)
