@@ -1,0 +1,81 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t_str = input_data[ptr]
+    ptr += 1
+    t = int(t_str)
+    
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        
+        x = list(map(int, input_data[ptr:ptr+n]))
+        ptr += n
+        
+        
+        pos = 0
+        distances = []
+        for val in x:
+            pos += val
+            distances.append(abs(pos))
+            
+       
+        pref_max = [0] * n
+        curr_max = 0
+        for i in range(n):
+            curr_max = max(curr_max, distances[i])
+            pref_max[i] = curr_max
+            
+        suff_max = [0] * n
+        curr_max = 0
+        for i in range(n-1, -1, -1):
+            curr_max = max(curr_max, distances[i])
+            suff_max[i] = curr_max
+            
+        q = int(input_data[ptr])
+        ptr += 1
+        
+        results = []
+        for _ in range(q):
+            w = int(input_data[ptr])
+            ptr += 1
+            
+           
+            if pref_max[-1] < w:
+                results.append("-1")
+                continue
+                
+            
+            low, high = 0, n - 1
+            first_day = n
+            while low <= high:
+                mid = (low + high) // 2
+                if pref_max[mid] >= w:
+                    first_day = mid
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            
+           
+            low, high = 0, n - 1
+            last_day = 0
+            while low <= high:
+                mid = (low + high) // 2
+                if suff_max[mid] >= w:
+                    last_day = mid
+                    low = mid + 1
+                else:
+                    high = mid - 1
+            
+            
+            results.append(f"{first_day + 1} {last_day + 1}")
+            
+        sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
