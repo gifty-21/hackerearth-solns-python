@@ -1,0 +1,45 @@
+import sys
+
+def count_set_bits_upto(n, x):
+    """Counts how many integers from 0 to n have the x-th bit set."""
+    if n < 0 or x <= 0:
+        return 0
+    
+    bit_val = 1 << (x - 1)
+  
+    cycle_len = 1 << x
+    
+    total_nums = n + 1
+    
+    full_cycles = total_nums // cycle_len
+    count = full_cycles * bit_val
+    
+    remainder = total_nums % cycle_len
+    
+    count += max(0, remainder - bit_val)
+    
+    return count
+
+def solve():
+ 
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    q = int(input_data[0])
+    results = []
+    
+    idx = 1
+    for _ in range(q):
+        l = int(input_data[idx])
+        r = int(input_data[idx + 1])
+        x = int(input_data[idx + 2])
+        idx += 3
+        
+        ans = count_set_bits_upto(r, x) - count_set_bits_upto(l - 1, x)
+        results.append(str(ans))
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
