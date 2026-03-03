@@ -1,0 +1,32 @@
+import sys
+
+def solve():
+    
+    try:
+        line = sys.stdin.readline()
+        if not line:
+            return
+        t = int(line.strip())
+    except ValueError:
+        return
+
+    for _ in range(t):
+        
+        s = sys.stdin.readline().strip()
+        if not s:
+            continue
+            
+        
+        freq = {}
+        for char in s:
+            freq[char] = freq.get(char, 0) + 1
+        
+        
+        max_palindromes = 0
+        for char in freq:
+            max_palindromes += freq[char] // 2
+            
+        print(max_palindromes)
+
+if __name__ == "__main__":
+    solve()
