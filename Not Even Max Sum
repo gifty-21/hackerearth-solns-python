@@ -1,0 +1,44 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t_cases = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    
+    for _ in range(t_cases):
+        n = int(input_data[ptr])
+        ptr += 1
+        
+        arr = []
+        for i in range(n):
+            arr.append(int(input_data[ptr]))
+            ptr += 1
+            
+        total_sum = sum(arr)
+        if total_sum % 2 != 0:
+            results.append(str(total_sum))
+        else:
+            min_odd = float('inf')
+            for num in arr:
+                if num % 2 != 0:
+                    if num < min_odd:
+                        min_odd = num
+            
+           
+            if min_odd == float('inf'):
+                results.append("0")
+            else:
+                results.append(str(total_sum - min_odd))
+                
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
