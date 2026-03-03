@@ -1,0 +1,28 @@
+import sys
+from collections import Counter
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+   
+    n = int(input_data[0])
+   
+    singers = list(map(int, input_data[1:]))
+    counts = Counter(singers)
+    
+    max_songs = 0
+    for count in counts.values():
+        if count > max_songs:
+            max_songs = count
+   
+    favourite_singers_count = 0
+    for count in counts.values():
+        if count == max_songs:
+            favourite_singers_count += 1
+   
+    sys.stdout.write(str(favourite_singers_count) + '\n')
+
+if __name__ == "__main__":
+    solve()
