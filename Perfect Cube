@@ -1,0 +1,53 @@
+import sys
+from collections import defaultdict
+
+def get_prime_factors(n):
+    factors = {}
+    d = 2
+    temp = n
+    while d * d <= temp:
+        while temp % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            temp //= d
+        d += 1
+    if temp > 1:
+        factors[temp] = factors.get(temp, 0) + 1
+    return factors
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    arr = list(map(int, input_data[1:]))
+    
+    current_state = {}
+   
+    state_counts = {tuple(): 1} 
+    
+    total_subarrays = 0
+    
+    for x in arr:
+        factors = get_prime_factors(x)
+        
+        for p, count in factors.items():
+           
+            new_val = (current_state.get(p, 0) + count) % 3
+            if new_val == 0:
+               
+                if p in current_state:
+                    del current_state[p]
+            else:
+                current_state[p] = new_val
+        
+      
+        state_key = tuple(sorted(current_state.items()))
+        
+        total_subarrays += state_counts.get(state_key, 0)
+        state_counts[state_key] = state_counts.get(state_key, 0) + 1
+        
+    print(total_subarrays)
+
+if __name__ == "__main__":
+    solve()
