@@ -1,0 +1,40 @@
+import sys
+from collections import deque
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    m = int(input_data[1])
+    k = int(input_data[2])
+    s = int(input_data[3])
+   
+    adj = [[] for _ in range(n + 1)]
+    ptr = 4
+    for _ in range(m):
+        u = int(input_data[ptr])
+        v = int(input_data[ptr + 1])
+        adj[u].append(v)
+        adj[v].append(u)
+        ptr += 2
+      
+    visited = {s}
+    queue = deque([(s, 0)])
+    
+    while queue:
+        u, dist = queue.popleft()
+        
+       
+        if dist < k:
+            for v in adj[u]:
+                if v not in visited:
+                    visited.add(v)
+                    queue.append((v, dist + 1))
+    
+    print(len(visited))
+
+if __name__ == "__main__":
+    solve()
