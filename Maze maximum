@@ -1,0 +1,53 @@
+import sys
+
+def check(x, row_mins, col_mins):
+   
+    has_row = any(m >= x for m in row_mins)
+ 
+    has_col = any(m >= x for m in col_mins)
+    return has_row and has_col
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    m = int(input_data[1])
+    
+    matrix = []
+    ptr = 2
+    for i in range(n):
+        matrix.append(list(map(int, input_data[ptr : ptr + m])))
+        ptr += m
+    
+    row_mins = [min(row) for row in matrix]
+ 
+    col_mins = []
+    for j in range(m):
+        col_min = matrix[0][j]
+        for i in range(1, n):
+            if matrix[i][j] < col_min:
+                col_min = matrix[i][j]
+        col_mins.append(col_min)
+        
+    # Binary Search for the maximum X
+    all_values = sorted(list(set(row_mins + col_mins)))
+    low = 0
+    high = len(all_values) - 1
+    ans = 0
+    
+    while low <= high:
+        mid = (low + high) // 2
+        X = all_values[mid]
+        if check(X, row_mins, col_mins):
+            ans = X
+            low = mid + 1
+        else:
+            high = mid - 1
+            
+    print(ans)
+
+if __name__ == "__main__":
+    solve()
