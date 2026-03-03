@@ -1,0 +1,43 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        a = list(map(int, input_data[ptr : ptr + n]))
+        ptr += n
+        
+        total_sum = sum(a)
+       
+        possible_sums = 1
+        for x in a:
+           
+            possible_sums |= (possible_sums << x)
+            
+        min_diff = float('inf')
+      
+        for x in range(total_sum // 2 + 1):
+            if (possible_sums >> x) & 1:
+               
+                score_b = x * x
+                score_c = (total_sum - x) ** 2
+                diff = abs(score_b - score_c)
+                
+                if diff < min_diff:
+                    min_diff = diff
+                    
+        results.append(str(min_diff))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
