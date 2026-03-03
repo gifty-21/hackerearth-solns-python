@@ -1,0 +1,51 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    it = iter(input_data)
+    t_cases = int(next(it))
+    
+    results = []
+    for _ in range(t_cases):
+       
+        n = int(next(it))
+        m = int(next(it))
+        
+        s_str = next(it)
+        t_str = next(it)
+       
+        s_counts = {}
+        for char in s_str:
+            s_counts[char] = s_counts.get(char, 0) + 1
+            
+       
+        t_counts = {}
+        for char in t_str:
+            t_counts[char] = t_counts.get(char, 0) + 1
+            
+       
+        max_copies = float('inf')
+        
+        for char, required_count in t_counts.items():
+            if char not in s_counts:
+                max_copies = 0
+                break
+            
+           
+            available = s_counts[char] // required_count
+            if available < max_copies:
+                max_copies = available
+       
+        if max_copies == float('inf'):
+            max_copies = 0
+            
+        results.append(str(max_copies))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
