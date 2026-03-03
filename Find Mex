@@ -1,0 +1,28 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    arr = list(map(int, input_data[1:]))
+    
+    seen = set()
+    current_mex = 0
+    results = []
+    
+    for x in arr:
+        
+        seen.add(x)
+        
+        while current_mex in seen:
+            current_mex += 1
+        
+        results.append(str(current_mex))
+    
+    sys.stdout.write(" ".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
