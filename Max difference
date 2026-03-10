@@ -1,0 +1,28 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t_cases = int(input_data[ptr])
+    ptr += 1
+    
+    for _ in range(t_cases):
+        n = int(input_data[ptr])
+        ptr += 1
+        arr = sorted([int(x) for x in input_data[ptr : ptr + n]])
+        ptr += n
+        
+        if n < 2:
+            print(0)
+        elif n == 2 or n == 3:
+            print(arr[-1] - arr[0])
+        else:
+           
+            weight = (arr[n-1] - arr[0]) + (arr[n-2] - arr[1])
+            print(weight)
+
+if __name__ == "__main__":
+    solve()
