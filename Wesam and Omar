@@ -1,0 +1,35 @@
+import sys
+
+def can_reach(grid):
+  
+    moves = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1)]
+    start, end = (0, 0), (2, 2)
+    
+    stack = [start]
+    visited = {start}
+    
+    while stack:
+        r, c = stack.pop()
+        if (r, c) == end:
+            return True
+            
+        for dr, dc in moves:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < 3 and 0 <= nc < 3 and grid[nr][nc] == '.' and (nr, nc) not in visited:
+                visited.add((nr, nc))
+                stack.append((nr, nc))
+    return False
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data: return
+    
+    t = int(input_data[0])
+    idx = 1
+    for _ in range(t):
+        grid = input_data[idx:idx+3]
+        idx += 3
+        print("YES" if can_reach(grid) else "NO")
+
+if __name__ == "__main__":
+    solve()
