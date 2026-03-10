@@ -1,0 +1,32 @@
+import sys
+
+def solve():
+  
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        
+        x = [int(i) for i in input_data[ptr : ptr + n]]
+        ptr += n
+        
+        x.sort()
+        
+        mid_left = x[n // 2 - 1]
+        mid_right = x[n // 2]
+        
+        ans = mid_right - mid_left + 1
+        results.append(str(ans))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
