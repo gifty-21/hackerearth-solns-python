@@ -1,0 +1,97 @@
+import sys
+
+sys.setrecursionlimit(200000)
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    MOD = 10**9 + 7
+
+    for _ in range(t):
+        n = int(input_data[ptr])
+        q = int(input_data[ptr+1])
+        k_val = int(input_data[ptr+2])
+        ptr += 3
+        
+        adj = [[] for _ in range(n + 1)]
+        for _ in range(n - 1):
+            u = int(input_data[ptr])
+            v = int(input_data[ptr+1])
+            ptr += 2
+            adj[u].append(v)
+            adj[v].append(u)
+            
+        tin = [0] * (n + 1)
+        tout = [0] * (n + 1)
+        depth = [0] * (n + 1)
+        timer = 0
+        
+        stack = [(1, 0, 0)] 
+        order = []
+        while stack:
+            u, p, d = stack.pop()
+            timer += 1
+            tin[u] = timer
+            depth[u] = d
+            order.append(u)
+            for v in adj[u]:
+                if v != p:
+                    stack.append((v, u, d + 1))
+        
+        subtree_size = [1] * (n + 1)
+        for u in reversed(order):
+            for v in adj[u]:
+                if tin[v] > tin[u]:
+                    subtree_size[u] += subtree_size[v]
+        
+        for u in range(1, n + 1):
+            tout[u] = tin[u] + subtree_size[u] - 1
+
+        bit = [0] * (n + 2)
+
+        def update(idx, val):
+            while idx <= n:
+                bit[idx] = (bit[idx] + val) % MOD
+                idx += idx & (-idx)
+
+        def query(idx):
+            s = 0
+            while idx > 0:
+                s = (s + bit[idx]) % MOD
+                idx -= idx & (-idx)
+            return s
+
+        k_pow = [1] * (n + 1)
+        k_inv_pow = [1] * (n + 1)
+        inv_k = pow(k_val, MOD - 2, MOD) if k_val != 0 else 0
+        
+        for i in range(1, n + 1):
+            k_pow[i] = (k_pow[i-1] * k_val) % MOD
+            k_inv_pow[i] = (k_inv_pow[i-1] * inv_k) % MOD
+
+        results = []
+        for _ in range(q):
+            q_type = int(input_data[ptr])
+            if q_type == 0:
+                u = int(input_data[ptr+1])
+                val = k_inv_pow[depth[u]]
+                update(tin[u], val)
+                update(tout[u] + 1, -val)
+                ptr += 2
+            else:
+                v = int(input_data[ptr+1])
+                sum_inv = query(tin[v])
+                res = (sum_inv * k_pow[depth[v]]) % MOD
+                results.append(str(res))
+                ptr += 2
+        
+        sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
