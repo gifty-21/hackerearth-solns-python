@@ -1,0 +1,51 @@
+import sys
+
+def solve():
+    input = sys.stdin.read().split()
+    if not input: return
+    
+    ptr = 0
+    t = int(input[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input[ptr])
+        ptr += 1
+        a = [int(x) for x in input[ptr : ptr + n]]
+        ptr += n
+        
+        if n == 1:
+            results.append("0")
+            continue
+
+        pre = [0] * n
+        pre[0] = a[0]
+        for i in range(1, n):
+            pre[i] = pre[i-1] | a[i]
+            
+        suf = [0] * n
+        suf[n-1] = a[n-1]
+        for i in range(n-2, -1, -1):
+            suf[i] = suf[i+1] | a[i]
+            
+        total_or = pre[n-1]
+        max_saving = 0
+        
+        for i in range(n):
+            current_or = 0
+            if i == 0:
+                current_or = suf[1]
+            elif i == n - 1:
+                current_or = pre[n-2]
+            else:
+                current_or = pre[i-1] | suf[i+1]
+            
+            if current_or == total_or:
+                max_saving = max(max_saving, a[i])
+                
+        results.append(str(max_saving))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+solve()
