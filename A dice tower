@@ -1,0 +1,25 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    results = []
+    
+    for i in range(1, t + 1):
+        s = int(input_data[i])
+       
+        remainder = s % 14
+        
+        if s > 14 and 2 <= remainder <= 12:
+            results.append(str(s // 14))
+        else:
+            results.append("-1")
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
