@@ -1,0 +1,29 @@
+from collections import deque
+import sys
+
+def solve():
+  
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    a = deque(map(int, input_data[1:n+1]))
+    b = deque(map(int, input_data[n+1:2*n+1]))
+    
+    time = 0
+    while a:
+        if a[0] == b[0]:
+           
+            a.popleft()
+            b.popleft()
+            time += 1
+        else:
+          
+            a.append(a.popleft())
+            time += 1
+            
+    print(time)
+
+if __name__ == "__main__":
+    solve()
