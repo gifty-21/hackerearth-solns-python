@@ -1,0 +1,27 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+       
+        c = [int(x) for x in input_data[ptr : ptr + 4]]
+        ptr += 4
+        v = min(c)
+        
+        ans = 3 + (n + v - 1) // v
+        results.append(str(ans))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
