@@ -1,0 +1,54 @@
+import sys
+from collections import Counter
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        k = int(input_data[ptr+1])
+        ptr += 2
+        
+        arr = [int(x) for x in input_data[ptr : ptr + n]]
+        ptr += n
+        
+        counts = Counter(arr)
+        freq_k = counts[k]
+       
+        other_freqs = []
+        for val, f in counts.items():
+            if val != k:
+                other_freqs.append(f)
+        
+        if not other_freqs: 
+            results.append("0")
+            continue
+            
+        other_freqs.sort(reverse=True)
+        max_other = other_freqs[0]
+        
+        if freq_k > max_other:
+            results.append("0")
+        else:
+          
+            ops = 0
+            while freq_k <= max_other:
+                ops += 1
+                freq_k += 1
+                
+                other_freqs[0] -= 1
+                other_freqs.sort(reverse=True)
+                max_other = other_freqs[0]
+            results.append(str(ops))
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
