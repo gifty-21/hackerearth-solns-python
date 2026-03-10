@@ -1,0 +1,47 @@
+import sys
+from collections import Counter
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t_cases = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t_cases):
+        n = int(input_data[ptr])
+        s = input_data[ptr + 1]
+        t = input_data[ptr + 2]
+        ptr += 3
+        
+        count_s = Counter(s)
+        count_t = Counter(t)
+        
+        possible = True
+        needed_qs = 0
+      
+        for char_code in range(ord('a'), ord('z') + 1):
+            char = chr(char_code)
+            s_num = count_s[char]
+            t_num = count_t[char]
+            
+            if s_num > t_num:
+              
+                possible = False
+                break
+            else:
+                
+                needed_qs += (t_num - s_num)
+        
+        if possible and needed_qs <= count_s['?']:
+            results.append("Yes")
+        else:
+            results.append("No")
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
