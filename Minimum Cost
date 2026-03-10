@@ -1,0 +1,36 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        arr = [int(x) for x in input_data[ptr : ptr + n]]
+        ptr += n
+        
+        sorted_arr = sorted(arr)
+        
+        if arr == sorted_arr:
+            print(0)
+            continue
+          
+        left = 0
+        while left < n and arr[left] == sorted_arr[left]:
+            left += 1
+         
+        right = n - 1
+        while right >= 0 and arr[right] == sorted_arr[right]:
+            right -= 1
+       
+        length = right - left + 1
+        print(length * length)
+
+if __name__ == "__main__":
+    solve()
