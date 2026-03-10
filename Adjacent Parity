@@ -1,0 +1,34 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data: return
+    
+    ptr = 0
+    T = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(T):
+        N = int(input_data[ptr])
+        ptr += 1
+        A = input_data[ptr : ptr + N]
+        ptr += N
+        
+        evens = 0
+        odds = 0
+        for x in A:
+            if int(x) % 2 == 0:
+                evens += 1
+            else:
+                odds += 1
+        
+        if evens == N or odds == N or abs(evens - odds) <= 1:
+            results.append("YES")
+        else:
+            results.append("NO")
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
