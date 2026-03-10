@@ -1,0 +1,39 @@
+import sys
+
+def get_msb(n):
+    if n == 0: return -1
+    return n.bit_length() - 1
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data: return
+    
+    ptr = 0
+    T = int(input_data[ptr])
+    ptr += 1
+    
+    output = []
+    for _ in range(T):
+        N = int(input_data[ptr])
+        ptr += 1
+        A = list(map(int, input_data[ptr : ptr + N]))
+        ptr += N
+        
+        msb_counts = [0] * 32
+        for x in A:
+            pos = get_msb(x)
+            if pos != -1:
+                msb_counts[pos] += 1
+        
+        total_pairs = (N * (N - 1)) // 2
+        invalid_pairs = 0
+        for count in msb_counts:
+            if count > 1:
+                invalid_pairs += (count * (count - 1)) // 2
+        
+        output.append(str(total_pairs - invalid_pairs))
+    
+    sys.stdout.write("\n".join(output) + "\n")
+
+if __name__ == "__main__":
+    solve()
