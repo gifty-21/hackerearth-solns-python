@@ -1,0 +1,39 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data: return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        ptr += 1
+        ia = [int(x) for x in input_data[ptr : ptr + n]]
+        ptr += n
+        ir = [int(x) for x in input_data[ptr : ptr + n]]
+        ptr += n
+        
+        a = [0] * n
+        possible = True
+        for i in range(n):
+          
+            val = n - (ia[i] + ir[n - 1 - i])
+            if 1 <= val <= n:
+                a[i] = val
+            else:
+                possible = False
+                break
+        
+        if possible and len(set(a)) == n:
+            results.append(" ".join(map(str, a)))
+        else:
+            results.append("-1")
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
