@@ -1,0 +1,30 @@
+import sys
+import math
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(t):
+        a = int(input_data[ptr])
+        b = int(input_data[ptr+1])
+        ptr += 2
+       
+        common = math.gcd(a, b)
+        
+        na = b // common
+        nb = a // common
+        
+        results.append(f"{na} {nb}")
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
