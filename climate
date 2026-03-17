@@ -1,0 +1,18 @@
+temp=int(input("enter temp(warm/cold)")
+humidity=int(input("enter humidity(dry/humid)")
+if temp=="warm":
+    if humidity=="dry"
+                  print("play baseketball")
+    elif humidity=="humid"
+                  print ("play tennis")
+    else:
+                  print("invalid")
+elif temp=="cold":
+    if humidity=="dry":
+                  print("play cricket")
+    elif humidity=="humid":
+                  print("swim")
+    else:
+                  print("invalid")
+else:
+              print("invalid")
