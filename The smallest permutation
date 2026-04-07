@@ -1,0 +1,39 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    T = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(T):
+        N = int(input_data[ptr])
+        ptr += 1
+        A = list(map(int, input_data[ptr : ptr + N]))
+        ptr += N
+        
+        pos = {val: i for i, val in enumerate(A)}
+        
+        swapped = False
+        for i in range(N):
+            ideal_val = i + 1
+            if A[i] != ideal_val:
+              
+                target_idx = pos[ideal_val]
+                A[i], A[target_idx] = A[target_idx], A[i]
+                swapped = True
+                break
+        
+        if not swapped and N >= 2:
+            A[N-1], A[N-2] = A[N-2], A[N-1]
+            
+        results.append(" ".join(map(str, A)))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
