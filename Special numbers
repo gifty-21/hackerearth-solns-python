@@ -1,0 +1,37 @@
+import sys
+import math
+
+def solve():
+    line = sys.stdin.readline()
+    if not line:
+        return
+    N = int(line.strip())
+    
+    special_numbers = []
+    queue = [4, 7]
+    while queue:
+        curr = queue.pop(0)
+        if curr <= N:
+            special_numbers.append(curr)
+           
+            n1 = curr * 10 + 4
+            n2 = curr * 10 + 7
+            if n1 <= N:
+                queue.append(n1)
+            if n2 <= N:
+                queue.append(n2)
+    
+    special_numbers.sort()
+    
+    count = 0
+ 
+    S = len(special_numbers)
+    for i in range(S):
+        for j in range(i, S):
+            if math.gcd(special_numbers[i], special_numbers[j]) == 1:
+                count += 1
+                
+    print(count)
+
+if __name__ == "__main__":
+    solve()
