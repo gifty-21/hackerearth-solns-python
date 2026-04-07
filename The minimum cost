@@ -1,0 +1,37 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    T = int(input_data[0])
+    ptr = 1
+    results = []
+    
+    for _ in range(T):
+        N = int(input_data[ptr])
+        C01 = int(input_data[ptr+1])
+        C10 = int(input_data[ptr+2])
+        A = list(map(int, input_data[ptr+3 : ptr+3+N]))
+        ptr += 3 + N
+        
+        cost_a = 0 
+        cost_b = 0 
+        
+        for i in range(N):
+           
+            target_a = i % 2
+            if A[i] != target_a:
+                cost_a += C01 if target_a == 1 else C10
+               
+            target_b = (i + 1) % 2
+            if A[i] != target_b:
+                cost_b += C01 if target_b == 1 else C10
+                
+        results.append(str(min(cost_a, cost_b)))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
