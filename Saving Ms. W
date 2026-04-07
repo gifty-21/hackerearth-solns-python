@@ -1,0 +1,69 @@
+import sys
+import heapq
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    N = int(input_data[ptr])
+    M = int(input_data[ptr+1])
+    A = int(input_data[ptr+2]) - 1 
+    B = int(input_data[ptr+3]) - 1 
+    ptr += 4
+    
+    INF = float('inf')
+    stamina_dist = [[INF] * N for _ in range(N)]
+    for i in range(N):
+        stamina_dist[i][i] = 0
+        
+    for _ in range(M):
+        u = int(input_data[ptr]) - 1
+        v = int(input_data[ptr+1]) - 1
+        z = int(input_data[ptr+2])
+        ptr += 3
+        if z < stamina_dist[u][v]:
+            stamina_dist[u][v] = stamina_dist[v][u] = z
+            
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                if stamina_dist[i][k] + stamina_dist[k][j] < stamina_dist[i][j]:
+                    stamina_dist[i][j] = stamina_dist[i][k] + stamina_dist[k][j]
+                    
+    fruits = []
+    for _ in range(N):
+        fruits.append((int(input_data[ptr]), int(input_data[ptr+1])))
+        ptr += 2
+        
+    if A == B:
+        print(0)
+        return
+
+    min_sleep = [INF] * N
+    pq = [(0, A)]
+    min_sleep[A] = 0
+    
+    while pq:
+        d, u = heapq.heappop(pq)
+        
+        if d > min_sleep[u]:
+            continue
+        
+        ci, hi = fruits[u]
+        
+        for v in range(N):
+          
+            if stamina_dist[u][v] <= ci:
+                if d + hi < min_sleep[v]:
+                    min_sleep[v] = d + hi
+                    heapq.heappush(pq, (min_sleep[v], v))
+    
+    print(min_sleep[B] if min_sleep[B] != INF else -1)
+
+if __name__ == "__main__":
+    solve()
+
+   
