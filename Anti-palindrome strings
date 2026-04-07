@@ -1,0 +1,21 @@
+import sys
+
+def solve():
+   
+    line = sys.stdin.readline()
+    if not line:
+        return
+    t = int(line.strip())
+    
+    for _ in range(t):
+        s = sys.stdin.readline().strip()
+       
+        sorted_s = "".join(sorted(s))
+        
+        if sorted_s == sorted_s[::-1]:
+            print("-1")
+        else:
+            print(sorted_s)
+
+if __name__ == "__main__":
+    solve()
