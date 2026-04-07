@@ -1,0 +1,29 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    N = int(input_data[0])
+    A = input_data[1]
+    B = input_data[2]
+    
+    cost = 0
+    i = 0
+    while i < N:
+        if A[i] != B[i]:
+            
+            if i + 1 < N and A[i+1] != B[i+1] and A[i] != A[i+1]:
+                cost += 1
+                i += 2 
+            else:
+                cost += 1
+                i += 1 
+        else:
+            i += 1
+            
+    print(cost)
+
+if __name__ == "__main__":
+    solve()
