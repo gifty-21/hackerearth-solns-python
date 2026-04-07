@@ -1,0 +1,43 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    N, M = int(input_data[0]), int(input_data[1])
+    grid = input_data[2:]
+    MOD = 10**9 + 7
+
+    dp = [[0] * M for _ in range(N)]
+    dp[0][0] = 1
+    
+    row_ways = [[0] * M for _ in range(N)]
+    col_ways = [[0] * M for _ in range(N)]
+
+    for i in range(N):
+        for j in range(M):
+            if grid[i][j] == '1':
+                continue
+            
+            if i == 0 and j == 0:
+                continue
+
+            if j > 0:
+                if grid[i][j-1] == '0':
+                    row_ways[i][j] = (dp[i][j-1] + row_ways[i][j-1]) % MOD
+                else:
+                    row_ways[i][j] = row_ways[i][j-1]
+            
+            if i > 0:
+                if grid[i-1][j] == '0':
+                    col_ways[i][j] = (dp[i-1][j] + col_ways[i-1][j]) % MOD
+                else:
+                    col_ways[i][j] = col_ways[i-1][j]
+            
+            dp[i][j] = (row_ways[i][j] + col_ways[i][j]) % MOD
+
+    print(dp[N-1][M-1])
+
+if __name__ == "__main__":
+    solve()
