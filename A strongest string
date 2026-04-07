@@ -1,0 +1,39 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    t = int(input_data[ptr])
+    ptr += 1
+    
+    for _ in range(t):
+        n = int(input_data[ptr])
+        s = input_data[ptr+1]
+        ptr += 2
+        
+        result = []
+        last_index = -1
+      
+        used = [False] * 26
+        
+        for char_code in range(25, -1, -1):
+            char_to_find = chr(ord('a') + char_code)
+            
+            found_idx = -1
+            for i in range(last_index + 1, n):
+                if s[i] == char_to_find:
+                    found_idx = i
+                    break
+            
+            if found_idx != -1:
+                result.append(char_to_find)
+                last_index = found_idx
+                
+        print("".join(result))
+
+if __name__ == "__main__":
+    solve()
