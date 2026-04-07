@@ -1,0 +1,42 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    T = int(input_data[0])
+    ptr = 1
+    results = []
+    
+    for _ in range(T):
+        N = int(input_data[ptr])
+        S = input_data[ptr+1]
+        ptr += 2
+        
+        ones_and_threes = []
+        twos_count = 0
+        
+        for char in S:
+            if char == '2':
+                twos_count += 1
+            else:
+                ones_and_threes.append(char)
+        
+        res = []
+        placed = False
+        for char in ones_and_threes:
+            if char == '3' and not placed:
+                res.append('2' * twos_count)
+                placed = True
+            res.append(char)
+            
+        if not placed:
+            res.append('2' * twos_count)
+            
+        results.append("".join(res))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
