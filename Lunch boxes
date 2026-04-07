@@ -1,0 +1,39 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    T = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(T):
+        N = int(input_data[ptr])
+        M = int(input_data[ptr+1])
+        ptr += 2
+        
+        # Get school orders
+        A = list(map(int, input_data[ptr : ptr + M]))
+        ptr += M
+        
+        A.sort()
+        
+        count = 0
+        current_sum = 0
+        for order in A:
+            if current_sum + order <= N:
+                current_sum += order
+                count += 1
+            else:
+                break
+        
+        results.append(str(count))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
