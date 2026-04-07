@@ -1,0 +1,36 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data: return
+    
+    T = int(input_data[0])
+    idx = 1
+    for _ in range(T):
+        N_len = int(input_data[idx])
+        M = int(input_data[idx+1])
+        S = input_data[idx+2]
+        idx += 3
+        
+        prefix = [0] * (N_len + 1)
+        for i in range(N_len):
+            prefix[i+1] = (prefix[i] * 10 + int(S[i])) % M
+            
+        suffix = [0] * (N_len + 1)
+        p10 = 1
+        p10_list = [1] * (N_len + 1)
+        for i in range(N_len - 1, -1, -1):
+            suffix[i] = (suffix[i+1] + int(S[i]) * p10) % M
+            p10 = (p10 * 10) % M
+            p10_list[N_len - 1 - i + 1] = p10
+            
+        max_mod = prefix[N_len]
+        for i in range(N_len):
+            
+            val = (prefix[i] * p10_list[N_len - 1 - i] + suffix[i+1]) % M
+            if val > max_mod:
+                max_mod = val
+        print(max_mod)
+
+if __name__ == "__main__":
+    solve()
