@@ -1,0 +1,46 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    T = int(input_data[0])
+    ptr = 1
+    results = []
+    
+    for _ in range(T):
+        N = int(input_data[ptr])
+        ptr += 1
+        A = list(map(int, input_data[ptr:ptr+N]))
+        ptr += N
+        
+        suffix_mex = [0] * (N + 1)
+        present = {}
+        curr_mex = 0
+        for i in range(N - 1, -1, -1):
+            val = A[i]
+            present[val] = present.get(val, 0) + 1
+            while present.get(curr_mex, 0) > 0:
+                curr_mex += 1
+            suffix_mex[i] = curr_mex
+            
+        prefix_present = {}
+        prefix_curr_mex = 0
+        found_index = -1
+        for i in range(N - 1): 
+            val = A[i]
+            prefix_present[val] = prefix_present.get(val, 0) + 1
+            while prefix_present.get(prefix_curr_mex, 0) > 0:
+                prefix_curr_mex += 1
+            
+            if prefix_curr_mex == suffix_mex[i+1]:
+                found_index = i + 1
+                break
+        
+        results.append(str(found_index))
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
