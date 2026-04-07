@@ -1,0 +1,21 @@
+import sys
+from collections import Counter
+
+def solve():
+ 
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    N = int(input_data[0])
+    S = input_data[1]
+    
+    counts = Counter(S)
+    
+    if not counts:
+        print(0)
+    else:
+        print(max(counts.values()))
+
+if __name__ == "__main__":
+    solve()
