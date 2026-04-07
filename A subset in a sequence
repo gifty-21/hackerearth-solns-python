@@ -1,0 +1,30 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    results = []
+    
+    for i in range(1, t + 1):
+        n = int(input_data[i])
+        subset = []
+        power_of_three = 1
+        
+        temp_n = n
+        current_power = 0
+        while temp_n > 0:
+            if temp_n & 1:
+              
+                subset.append(3**current_power)
+            temp_n >>= 1
+            current_power += 1
+            
+        print(len(subset))
+        print(*(subset))
+
+if __name__ == "__main__":
+    solve()
