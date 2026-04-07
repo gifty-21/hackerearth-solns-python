@@ -1,0 +1,46 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    N = int(input_data[0])
+    matrix = []
+    idx = 1
+    for i in range(N):
+        matrix.append(input_data[idx : idx + N])
+        idx += N
+    
+    instructions = input_data[idx]
+    
+    net_rot = 0
+    for char in instructions:
+        if char == 'R':
+            net_rot += 1
+        else:
+            net_rot -= 1
+            
+    rot = net_rot % 4
+    
+    result = [["" for _ in range(N)] for _ in range(N)]
+    
+    for r in range(N):
+        for c in range(N):
+            if rot == 0:
+                result[r][c] = matrix[r][c]
+            elif rot == 1: # 90 CW
+                result[c][N-1-r] = matrix[r][c]
+            elif rot == 2: # 180 CW
+                result[N-1-r][N-1-c] = matrix[r][c]
+            elif rot == 3: # 270 CW
+                result[N-1-c][r] = matrix[r][c]
+                
+    output = []
+    for row in result:
+        output.append(" ".join(row))
+    sys.stdout.write("\n".join(output) + "\n")
+
+if __name__ == "__main__":
+    solve()
