@@ -1,0 +1,29 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    T = int(input_data[0])
+    results = []
+    ptr = 1
+    
+    for _ in range(T):
+        x = int(input_data[ptr])
+        k = int(input_data[ptr + 1])
+        ptr += 2
+        
+        possible = True
+        while x > 0:
+            if x % k > 1:
+                possible = False
+                break
+            x //= k
+            
+        results.append("YES" if possible else "NO")
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
