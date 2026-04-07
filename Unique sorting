@@ -1,0 +1,25 @@
+import sys
+
+def solve():
+    
+    try:
+        line = sys.stdin.readline()
+        if not line: return
+        t = int(line.strip())
+    except EOFError:
+        return
+
+    for _ in range(t):
+        s = sys.stdin.readline().strip()
+        
+        odd_chars = sorted([c for c in s if c.isalpha() and (ord(c) - ord('a')) % 2 != 0])
+        even_chars = sorted([c for c in s if c.isalpha() and (ord(c) - ord('a')) % 2 == 0])
+        
+        odd_digits = sorted([c for c in s if c.isdigit() and int(c) % 2 != 0])
+        even_digits = sorted([c for c in s if c.isdigit() and int(c) % 2 == 0])
+        
+        result = "".join(odd_chars + even_chars + odd_digits + even_digits)
+        print(result)
+
+if __name__ == "__main__":
+    solve()
