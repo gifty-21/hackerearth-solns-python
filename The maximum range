@@ -1,0 +1,41 @@
+import sys
+from collections import deque
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    N = int(input_data[0])
+    K = int(input_data[1])
+    A = list(map(int, input_data[2:]))
+    
+    max_dq = deque()
+    min_dq = deque()
+    left = 0
+    max_len = 0
+    
+    for right in range(N):
+       
+        while max_dq and A[max_dq[-1]] <= A[right]:
+            max_dq.pop()
+        max_dq.append(right)
+        
+      
+        while min_dq and A[min_dq[-1]] >= A[right]:
+            min_dq.pop()
+        min_dq.append(right)
+        
+        while A[max_dq[0]] - A[min_dq[0]] > K:
+            left += 1
+            if max_dq[0] < left:
+                max_dq.popleft()
+            if min_dq[0] < left:
+                min_dq.popleft()
+        
+        max_len = max(max_len, right - left + 1)
+        
+    print(max_len)
+
+if __name__ == "__main__":
+    solve()
