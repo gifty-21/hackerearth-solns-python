@@ -1,0 +1,17 @@
+import sys
+
+def solve():
+    line = sys.stdin.readline().strip()
+    if not line:
+        return
+    
+    hh, mm = map(int, line.split(':'))
+   
+    total_minutes = hh * 60 + mm
+    
+    count = (total_minutes * 11) // 720 + 1
+    
+    print(count)
+
+if __name__ == "__main__":
+    solve()
