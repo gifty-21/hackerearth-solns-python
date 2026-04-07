@@ -1,0 +1,31 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    T = int(input_data[0])
+    results = []
+    
+    for i in range(1, T + 1):
+        S = input_data[i]
+     
+        L = S.count('L')
+        R = S.count('R')
+        U = S.count('U')
+        D = S.count('D')
+        
+        diff_x = abs(R - L)
+        diff_y = abs(U - D)
+        
+        ops_x = (diff_x + 1) // 2
+        ops_y = (diff_y + 1) // 2
+        
+        results.append(str(ops_x + ops_y))
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
