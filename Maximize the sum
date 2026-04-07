@@ -1,0 +1,35 @@
+import sys
+from collections import defaultdict
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    T = int(input_data[ptr])
+    ptr += 1
+    
+    results = []
+    for _ in range(T):
+        N = int(input_data[ptr])
+        K = int(input_data[ptr+1])
+        ptr += 2
+        
+        sum_map = defaultdict(int)
+        for _ in range(N):
+            val = int(input_data[ptr])
+            if val > 0:
+                sum_map[val] += val
+            ptr += 1
+            
+        positive_sums = sorted(sum_map.values(), reverse=True)
+        
+        max_sum = sum(positive_sums[:K])
+        results.append(str(max_sum))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
