@@ -1,0 +1,19 @@
+import sys
+
+def solve():
+    
+    word = sys.stdin.readline().strip()
+    
+    if not word:
+        return
+    
+    x = word.count('z')
+    y = word.count('o')
+    
+    if 2 * x == y:
+        print("Yes")
+    else:
+        print("No")
+
+if __name__ == "__main__":
+    solve()
