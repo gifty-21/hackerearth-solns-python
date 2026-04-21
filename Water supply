@@ -1,0 +1,38 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    
+    blocked = list(map(int, input_data[1 + 2*(n-1):]))
+    
+    max_cities = 0
+    current_count = 0
+    
+    for i in range(n):
+       
+        pass
+
+    blocked_indices = [i for i, val in enumerate(blocked) if val == 1]
+    
+    if not blocked_indices:
+        print(n)
+        return
+        
+    max_cities = blocked_indices[0] + 1
+    
+    for i in range(len(blocked_indices) - 1):
+      
+        segment_len = (blocked_indices[i+1] - blocked_indices[i]) + 1
+        max_cities = max(max_cities, segment_len)
+        
+    max_cities = max(max_cities, (n - 1 - blocked_indices[-1]) + 1)
+    
+    print(max_cities)
+
+if __name__ == "__main__":
+    solve()
