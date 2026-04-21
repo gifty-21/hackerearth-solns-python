@@ -1,0 +1,32 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n1, n2, n3 = map(int, input_data[:3])
+    s1, s2, s3 = input_data[3], input_data[4], input_data[5]
+    
+    target_char = s3[0]
+    different_char = ''
+    for char in s3:
+        if char != target_char:
+            different_char = char
+            break
+            
+    x = []
+    for char in s2:
+       
+        if char < target_char:
+            x.append(char)
+      
+        elif char == target_char:
+            if different_char and different_char < target_char:
+                x.append(char)
+                
+    print(s1 + "".join(x) + s3)
+
+if __name__ == "__main__":
+    solve()
