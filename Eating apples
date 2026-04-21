@@ -1,0 +1,41 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+
+    rows = {}
+    for i in range(n):
+        x = int(input_data[2*i + 1])
+        y = int(input_data[2*i + 2])
+        if x not in rows:
+            rows[x] = []
+        rows[x].append((y, i))
+    
+    sorted_x = sorted(rows.keys())
+    ans = [0] * n
+    count = 0
+    reverse = False
+    
+    for x in sorted_x:
+       
+        apple_list = rows[x]
+        if reverse:
+            apple_list.sort(key=lambda a: a[0], reverse=True)
+        else:
+            apple_list.sort(key=lambda a: a[0])
+        
+        for y, original_idx in apple_list:
+            ans[original_idx] = count
+            count += 1
+        
+        reverse = not reverse
+        
+    for x in ans:
+        sys.stdout.write(str(x) + '\n')
+
+if __name__ == "__main__":
+    solve()
