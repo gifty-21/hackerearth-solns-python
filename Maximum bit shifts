@@ -1,0 +1,33 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    arr = list(map(int, input_data[1:]))
+    
+    results = []
+    
+    for x in arr:
+        if x == 0:
+            results.append("0")
+            continue
+            
+        
+        set_bits = bin(x).count('1')
+        
+        length = x.bit_length()
+        
+        max_val = 0
+        for i in range(set_bits):
+            max_val |= (1 << (length - 1 - i))
+            
+        results.append(str(max_val))
+        
+    print(" ".join(results))
+
+if __name__ == "__main__":
+    solve()
