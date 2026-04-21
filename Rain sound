@@ -1,0 +1,31 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    pointer = 1
+    results = []
+    
+    for _ in range(t):
+        l = int(input_data[pointer])
+        r = int(input_data[pointer + 1])
+        s = int(input_data[pointer + 2])
+        pointer += 3
+        
+        min_x = (l + s - 1) // s
+        
+        max_x = r // s
+        
+        if min_x <= max_x:
+            results.append(f"{min_x} {max_x}")
+        else:
+            results.append("-1 -1")
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
