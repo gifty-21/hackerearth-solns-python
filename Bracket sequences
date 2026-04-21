@@ -1,0 +1,33 @@
+import sys
+
+def solve():
+    s = sys.stdin.readline().strip()
+    if not s:
+        return
+
+    n = len(s)
+    prefix_sum = 0
+    min_val = 0
+    count = 0
+    
+    current = 0
+    prefix_sums = []
+    for char in s:
+        if char == '(':
+            current += 1
+        else:
+            current -= 1
+        prefix_sums.append(current)
+
+    if current != 0:
+        print(0)
+        return
+   
+    min_val = min(prefix_sums)
+  
+    ans = prefix_sums.count(min_val)
+    
+    print(ans)
+
+if __name__ == "__main__":
+    solve()
