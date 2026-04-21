@@ -1,0 +1,38 @@
+import sys
+import math
+
+def solve():
+    
+    line = sys.stdin.readline()
+    if not line:
+        return
+    
+    try:
+        a, b = map(int, line.split())
+    except ValueError:
+        return
+
+    common_gcd = math.gcd(a, b)
+
+    if common_gcd < 2:
+        print("-1")
+        return
+
+   
+    if common_gcd % 2 == 0:
+        print(2)
+        return
+
+    smallest_p = -1
+    for i in range(3, int(math.sqrt(common_gcd)) + 1, 2):
+        if common_gcd % i == 0:
+            smallest_p = i
+            break
+    
+    if smallest_p == -1:
+        print(common_gcd)
+    else:
+        print(smallest_p)
+
+if __name__ == "__main__":
+    solve()
