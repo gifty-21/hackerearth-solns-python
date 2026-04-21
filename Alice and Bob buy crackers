@@ -1,0 +1,29 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    costs = list(map(int, input_data[1:]))
+    
+    dp = 1 
+    
+    for c in costs:
+      
+        dp |= (dp << c)
+    
+    count = 0
+    
+    max_sum = sum(costs)
+    
+    for s in range(2, max_sum + 1, 2):
+        if (dp >> s) & 1:
+            count += 1
+            
+    print(count)
+
+if __name__ == "__main__":
+    solve()
