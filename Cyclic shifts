@@ -1,0 +1,32 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    idx = 1
+    results = []
+    
+    for _ in range(t):
+        n = int(input_data[idx])
+        m = int(input_data[idx+1])
+        direction = input_data[idx+2]
+        idx += 3
+        
+        m %= 16
+        
+        if direction == 'L':
+        
+            ans = ((n << m) | (n >> (16 - m))) & 0xFFFF
+        else:
+            
+            ans = ((n >> m) | (n << (16 - m))) & 0xFFFF
+            
+        results.append(str(ans))
+        
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
