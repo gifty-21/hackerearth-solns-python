@@ -1,0 +1,29 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data: return
+    n, m, k = map(int, input_data[:3])
+    
+    house_commissions = [0] * (n + 2)
+    
+    pointer = 3
+    for _ in range(m):
+        l, r, c = map(int, input_data[pointer:pointer+3])
+        pointer += 3
+      
+        house_commissions[l] += c
+        house_commissions[r + 1] -= c
+        
+    actual_costs = []
+    current_cost = 0
+    for i in range(1, n + 1):
+        current_cost += house_commissions[i]
+        actual_costs.append(current_cost)
+       
+    actual_costs.sort()
+    print(sum(actual_costs[:k]))
+
+if __name__ == "__main__":
+    solve()
