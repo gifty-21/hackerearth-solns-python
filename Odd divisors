@@ -1,0 +1,29 @@
+import sys
+
+def solve():
+ 
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    pointer = 1
+    
+    for _ in range(t):
+        n = int(input_data[pointer])
+        m = int(input_data[pointer + 1])
+        pointer += 2
+        
+        ans = 0
+        while n > 0:
+           
+            k = (n + 1) // 2
+            
+            ans = (ans + (k % m) * (k % m)) % m
+           
+            n //= 2
+            
+        print(ans % m)
+
+if __name__ == "__main__":
+    solve()
