@@ -1,0 +1,26 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    pointer = 1
+    results = []
+    
+    for _ in range(t):
+        x = int(input_data[pointer])
+        y = int(input_data[pointer + 1])
+        pointer += 2
+        
+        if x < 0 or y < 0 or y > x:
+            results.append("-1")
+        else:
+           
+            results.append(str(x))
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
