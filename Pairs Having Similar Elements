@@ -1,0 +1,42 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    n = int(input_data[0])
+    arr = [int(x) for x in input_data[1:n+1]]
+    
+    arr.sort()
+    
+    total_pairs = 0
+    i = 0
+    
+    while i < n:
+        j = i
+        unique_elements = 1
+        total_elements = 1
+        
+        while j + 1 < n:
+            if arr[j+1] == arr[j]:
+                total_elements += 1
+                j += 1
+            elif arr[j+1] == arr[j] + 1:
+                total_elements += 1
+                unique_elements += 1
+                j += 1
+            else:
+                break
+                
+        if unique_elements > 1:
+            
+            total_pairs += (total_elements * (total_elements - 1)) // 2
+         
+        i = j + 1
+        
+    print(total_pairs)
+
+if __name__ == '__main__':
+    solve()
