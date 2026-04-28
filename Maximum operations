@@ -1,0 +1,39 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    t = int(input_data[0])
+    idx = 1
+    
+    results = []
+    for _ in range(t):
+        a = int(input_data[idx])
+        b = int(input_data[idx+1])
+        n = int(input_data[idx+2])
+        idx += 3
+        
+        rem = n % 3
+        
+        if rem == 1:
+            results.append(a)
+        elif rem == 2:
+            results.append(b)
+        else:
+           
+            xor_val = a ^ b
+            
+            max_ab = max(a, b)
+            bits = max(3, max_ab.bit_length())
+            
+            mask = (1 << bits) - 1
+            xnor_val = xor_val ^ mask
+            
+            results.append(max(xor_val, xnor_val))
+            
+    print('\n'.join(map(str, results)))
+
+if __name__ == '__main__':
+    solve()
