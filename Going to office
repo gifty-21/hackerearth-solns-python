@@ -1,0 +1,32 @@
+import sys
+
+def solve():
+  
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    D = int(input_data[0])
+    
+    Oc = int(input_data[1])
+    Of = int(input_data[2])
+    Od = int(input_data[3])
+    
+    Cs = int(input_data[4])
+    Cb = int(input_data[5])
+    Cm = int(input_data[6])
+    Cd = int(input_data[7])
+    
+    online_cost = Oc
+    if D > Of:
+        online_cost += (D - Of) * Od
+        
+    classic_cost = Cb + (D / Cs) * Cm + D * Cd
+    
+    if online_cost <= classic_cost:
+        print("Online Taxi")
+    else:
+        print("Classic Taxi")
+
+if __name__ == '__main__':
+    solve()
