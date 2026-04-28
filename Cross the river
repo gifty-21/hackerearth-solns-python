@@ -1,0 +1,70 @@
+import sys
+from collections import deque
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    idx = 0
+    t = int(input_data[idx])
+    idx += 1
+    
+    results = []
+    
+    for _ in range(t):
+        n = int(input_data[idx])
+        idx += 1
+        
+        rocks = []
+        for _ in range(n):
+            rocks.append((int(input_data[idx]), int(input_data[idx+1]), int(input_data[idx+2])))
+            idx += 3
+            
+        a = int(input_data[idx])
+        b = int(input_data[idx+1])
+        idx += 2
+        
+        start_y, end_y = max(a, b), min(a, b)
+        
+        queue = deque()
+        visited = [False] * n
+        dist = [0] * n
+        
+        for i in range(n):
+            cx, cy, r = rocks[i]
+            if cy + r >= start_y:
+                queue.append(i)
+                visited[i] = True
+                dist[i] = 1 
+                
+        possible = False
+        min_rocks = float('inf')
+        
+        while queue:
+            curr = queue.popleft()
+            cx, cy, cr = rocks[curr]
+            
+            if cy - cr <= end_y:
+                possible = True
+                min_rocks = min(min_rocks, dist[curr])
+             
+            for nxt in range(n):
+                if not visited[nxt]:
+                    nx, ny, nr = rocks[nxt]
+                    
+                    dist_sq = (cx - nx)**2 + (cy - ny)**2
+                    if dist_sq <= (cr + nr)**2:
+                        visited[nxt] = True
+                        dist[nxt] = dist[curr] + 1
+                        queue.append(nxt)
+                        
+        if possible:
+            results.append(min_rocks)
+        else:
+            results.append(-1)
+            
+    print('\n'.join(map(str, results)))
+
+if __name__ == '__main__':
+    solve()
