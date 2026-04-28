@@ -1,0 +1,29 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    n = int(input_data[0])
+    cars = [int(x) for x in input_data[1:n+1]]
+    buses = [int(x) for x in input_data[n+1:2*n+1]]
+    
+    diff = []
+    total_bus_cost = sum(buses)
+    
+    for i in range(n):
+        diff.append(cars[i] - buses[i])
+        
+    diff.sort()
+    
+    k1 = (n + 1) // 2
+    cost1 = total_bus_cost + sum(diff[:k1])
+    
+    k2 = n // 2
+    cost2 = total_bus_cost + sum(diff[:k2])
+    
+    print(min(cost1, cost2))
+
+if __name__ == '__main__':
+    solve()
