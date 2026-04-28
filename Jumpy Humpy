@@ -1,0 +1,37 @@
+import sys
+
+def solve():
+   
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    n = int(input_data[0])
+    heights = [int(x) for x in input_data[1:n+1]]
+    
+    stamina = [0] * n
+    stack = []
+    max_stamina = 0
+    
+    for i in range(n - 1, -1, -1):
+       
+        while stack and heights[stack[-1]] <= heights[i]:
+            stack.pop()
+            
+        if not stack:
+           
+            stamina[i] = heights[i]
+        else:
+            
+            next_greater = stack[-1]
+            stamina[i] = heights[i] ^ stamina[next_greater]
+            
+        stack.append(i)
+        
+        if stamina[i] > max_stamina:
+            max_stamina = stamina[i]
+            
+    print(max_stamina)
+
+if __name__ == '__main__':
+    solve()
