@@ -1,0 +1,34 @@
+import sys
+
+def solve():
+    
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    n = int(input_data[0])
+    disks = [int(x) for x in input_data[1:n+1]]
+    
+   
+    arrived = [False] * (n + 1)
+    
+  
+    expected_size = n
+    
+    results = []
+    
+    for disk in disks:
+        arrived[disk] = True
+        current_day_output = []
+        
+       
+        while expected_size > 0 and arrived[expected_size]:
+            current_day_output.append(str(expected_size))
+            expected_size -= 1
+            
+        results.append(' '.join(current_day_output))
+        
+    print('\n'.join(results))
+
+if __name__ == '__main__':
+    solve()
